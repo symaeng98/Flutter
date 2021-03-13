@@ -30,10 +30,13 @@ class Grade extends StatelessWidget {
           crossAxisAlignment:
               CrossAxisAlignment.start, //가로 축 정렬인데, start는 시작부분으로 정렬(한컴 느낌)
           children: <Widget>[
-            Center(
-              child: CircleAvatar(
-                backgroundImage: AssetImage('assets/Hyunsangsubae.jpg'),
-                radius: 60.0, //circle의 크기 조정
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0.0, 0.0, 30.0, 0.0),
+              child: Center(
+                child: CircleAvatar(
+                  backgroundImage: AssetImage('assets/Hyunsangsubae.jpg'),
+                  radius: 60.0, //circle의 크기 조정
+                ),
               ),
             ),
             Divider(
@@ -92,7 +95,7 @@ class Grade extends StatelessWidget {
             Row(
               //아이콘 + 텍스트 가로로 나열할 때 사용
               children: <Widget>[
-                Icon(Icons.check_circle_outline), //왼쪽에 아이콘 표시
+                Icon(Icons.double_arrow_outlined), //왼쪽에 아이콘 표시
                 SizedBox(
                   width: 10.0,
                 ),
@@ -131,11 +134,14 @@ class Grade extends StatelessWidget {
             SizedBox(
               height: 30.0,
             ),
-            Center(
-              child: CircleAvatar(
-                backgroundImage: AssetImage('assets/attack.gif'),
-                radius: 70.0,
-                backgroundColor: Colors.indigo[200],
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0.0, 0.0, 30.0, 0.0),
+              child: Center(
+                child: CircleAvatar(
+                  backgroundImage: AssetImage('assets/attack.gif'),
+                  radius: 70.0,
+                  backgroundColor: Colors.indigo[200],
+                ),
               ),
             ),
           ],
