@@ -151,7 +151,7 @@ class MySnackBar extends StatelessWidget {
       child: ElevatedButton(
           child: Text('Show me'),
           onPressed: () {
-            Scaffold.of(context).showSnackBar(
+            ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(
                   'Hello',
