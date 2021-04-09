@@ -1,0 +1,68 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "card",
+            "cwd": "CharacterCard\\card",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "uber",
+            "cwd": "CloneUber\\uber",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "copbap",
+            "cwd": "CopBap\\copbap",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "counter",
+            "cwd": "Counter\\counter",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "refactoring",
+            "cwd": "FirebaseLogIn\\refactoring",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "dicegame",
+            "cwd": "LogIn\\dicegame",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "appbar",
+            "cwd": "Practice_AppBar\\appbar",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "myapp",
+            "cwd": "ProjectBJJ\\myapp",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "weather",
+            "cwd": "WeatherApp\\weather",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "card",
+            "cwd": "WordCard\\card",
+            "request": "launch",
+            "type": "dart"
+        }
+    ]
+}

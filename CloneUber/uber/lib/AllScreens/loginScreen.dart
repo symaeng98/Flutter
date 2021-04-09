@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:uber/AllScreens/registerationScreen.dart';
 
 class LoginScreen extends StatelessWidget {
+  static const String idScreen = "Login";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -104,9 +106,11 @@ class LoginScreen extends StatelessWidget {
               style: TextButton.styleFrom(
                 primary: Colors.black,
               ),
-              child: Text("Do not have ans Account? Register Here."),
+              child: Text("Do not have an Account? Register Here."),
               onPressed: () {
-                print("clicked");
+                //눌렀을 때 Registeration Page로 이동해야한다.
+                Navigator.pushNamedAndRemoveUntil(
+                    context, RegistrationScreen.idScreen, (route) => false);
               },
             ),
           ],
