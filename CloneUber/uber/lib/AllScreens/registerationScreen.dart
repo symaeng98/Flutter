@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:uber/AllScreens/loginScreen.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:uber/AllScreens/mainscreen.dart';
+import 'package:uber/AllWidgets/progressDialog.dart';
 import 'package:uber/main.dart';
 
 class RegistrationScreen extends StatelessWidget {
   static const String idScreen = "register";
 
+  //TextEditingController는 TextField에 입력된 값을 읽어와야 할 때 이용한다
   final TextEditingController nameEditingController = TextEditingController();
   final TextEditingController emailEditingController = TextEditingController();
   final TextEditingController phoneEditingController = TextEditingController();
@@ -185,12 +187,22 @@ class RegistrationScreen extends StatelessWidget {
 
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
-  registerNewUser(BuildContext context) async {
+  void registerNewUser(BuildContext context) async {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return ProgressDialog(
+            message: "Registering, Please Wait...",
+          );
+        });
+
     final User firebaseUser = (await _firebaseAuth
             .createUserWithEmailAndPassword(
                 email: emailEditingController.text,
                 password: passwordEditingController.text)
             .catchError((errMsg) {
+      Navigator.pop(context);
       displayToastMessage("Error: " + errMsg.toString(), context);
     }))
         .user;
@@ -200,7 +212,7 @@ class RegistrationScreen extends StatelessWidget {
       //save user info to database
 
       Map userDataMap = {
-        "name": nameEditingController.text.trim(),
+        "name": nameEditingController.text.trim(), //입력하는 text의 공백을 없애줌
         "email": emailEditingController.text.trim(),
         "phone": phoneEditingController.text.trim(),
       };
@@ -211,6 +223,7 @@ class RegistrationScreen extends StatelessWidget {
       Navigator.pushNamedAndRemoveUntil(
           context, MainScreen.idScreen, (route) => false);
     } else {
+      Navigator.pop(context);
       //error occured - display error msg
       displayToastMessage("New user account has not been Created", context);
     }

@@ -1,8 +1,17 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:uber/AllScreens/mainscreen.dart';
 import 'package:uber/AllScreens/registerationScreen.dart';
+import 'package:uber/AllWidgets/progressDialog.dart';
+import 'package:uber/main.dart';
 
 class LoginScreen extends StatelessWidget {
   static const String idScreen = "Login";
+  final TextEditingController emailEditingController = TextEditingController();
+  final TextEditingController passwordEditingController =
+      TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,6 +47,7 @@ class LoginScreen extends StatelessWidget {
                     height: 1.0,
                   ),
                   TextField(
+                    controller: emailEditingController,
                     keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
                         labelText: "Email",
@@ -56,6 +66,7 @@ class LoginScreen extends StatelessWidget {
                     height: 1.0,
                   ),
                   TextField(
+                    controller: passwordEditingController,
                     obscureText: true,
                     decoration: InputDecoration(
                         labelText: "Password",
@@ -84,7 +95,14 @@ class LoginScreen extends StatelessWidget {
                       ),
                     ),
                     onPressed: () {
-                      print("clicked");
+                      if (!emailEditingController.text.contains("@")) {
+                        displayToastMessage(
+                            "Email address is not valid", context);
+                      } else if (passwordEditingController.text.isEmpty) {
+                        displayToastMessage("Password is mandatory.", context);
+                      } else {
+                        loginAndAuthenticateUser(context);
+                      }
                     },
                     child: Container(
                       height: 50.0,
@@ -117,5 +135,51 @@ class LoginScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  void loginAndAuthenticateUser(BuildContext context) async {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return ProgressDialog(
+          message: "Authenticating, Please Wait...",
+        );
+      },
+    );
+
+    final User firebaseUser = (await _firebaseAuth
+            .signInWithEmailAndPassword(
+                email: emailEditingController.text,
+                password: passwordEditingController.text)
+            .catchError((errMsg) {
+      Navigator.pop(context);
+      displayToastMessage("Error: " + errMsg.toString(), context);
+    }))
+        .user;
+
+    if (firebaseUser != null) {
+      //user created
+      //save user info to database
+
+      usersRef.child(firebaseUser.uid).once().then((DataSnapshot snap) {
+        if (snap.value != null) {
+          Navigator.pushNamedAndRemoveUntil(
+              context, MainScreen.idScreen, (route) => false);
+          displayToastMessage("You are logged-in now.", context);
+        } else {
+          Navigator.pop(context);
+          _firebaseAuth.signOut();
+          displayToastMessage(
+              "No record exists for this user. Please create new account.",
+              context);
+        }
+      });
+    } else {
+      Navigator.pop(context);
+      //error occured - display error msg
+      displayToastMessage("Error occured, cannot be founded", context);
+    }
   }
 }

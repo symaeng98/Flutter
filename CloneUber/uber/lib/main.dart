@@ -26,8 +26,9 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      initialRoute: LoginScreen.idScreen,
+      initialRoute: MainScreen.idScreen,
       routes: {
+        //routes는 <String, WidgetBuilder> (이를 Map형태라 한다.) 모두 보내줘야한다.
         RegistrationScreen.idScreen: (context) => RegistrationScreen(),
         LoginScreen.idScreen: (context) => LoginScreen(),
         MainScreen.idScreen: (context) => MainScreen(),
